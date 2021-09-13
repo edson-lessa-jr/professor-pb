@@ -6,12 +6,12 @@ import java.util.List;
 
 public class ProfessorDTO {
     private String nome;
-    private Date dataNascimento;
+    private String dataNascimento;
     private List<String> especialidades;
 
     public ProfessorDTO (){}
 
-    public ProfessorDTO(String nome, Date dataNascimento, List<String> especialidades) {
+    public ProfessorDTO(String nome, String dataNascimento, List<String> especialidades) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.especialidades = especialidades;
@@ -25,11 +25,11 @@ public class ProfessorDTO {
         this.nome = nome;
     }
 
-    public Date getDataNascimento() {
+    public String getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

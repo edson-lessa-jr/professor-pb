@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,7 +18,7 @@ public class ProfessorController {
         System.out.println(id);
         ProfessorDTO professorDTO = new ProfessorDTO();
         professorDTO.setNome("Edson Lessa");
-        professorDTO.setDataNascimento(new Date());
+        professorDTO.setDataNascimento("01/01/2000");
         String[] especialidades = {"PHP","Java"};
         professorDTO.setEspecialidades(Arrays.asList(especialidades) );
         return professorDTO;
@@ -30,8 +29,8 @@ public class ProfessorController {
         List<ProfessorDTO> professorDTOS = new ArrayList<>();
         ArrayList<String> strings = new ArrayList<>();
         strings.add("JS");
-        professorDTOS.add(new ProfessorDTO("José", new Date(), strings));
-        professorDTOS.add(new ProfessorDTO("Maria", new Date(), strings));
+        professorDTOS.add(new ProfessorDTO("José", "01/01/2000", strings));
+        professorDTOS.add(new ProfessorDTO("Maria", "01/01/2000", strings));
         return professorDTOS;
     }
 

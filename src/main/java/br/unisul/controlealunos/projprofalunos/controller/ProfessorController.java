@@ -2,6 +2,9 @@ package br.unisul.controlealunos.projprofalunos.controller;
 
 
 import br.unisul.controlealunos.projprofalunos.dto.ProfessorDTO;
+import br.unisul.controlealunos.projprofalunos.model.Professor;
+import br.unisul.controlealunos.projprofalunos.repository.ProfessorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,31 +15,34 @@ import java.util.List;
 @RequestMapping("/professor")
 public class ProfessorController {
 
+    @Autowired
+    private ProfessorRepository professorRepository;
 
     @GetMapping("/{id}")
     public ProfessorDTO localizarProfessor(@PathVariable(name = "id") Long id){
-        System.out.println(id);
-        ProfessorDTO professorDTO = new ProfessorDTO();
-        professorDTO.setNome("Edson Lessa");
-        professorDTO.setDataNascimento("01/01/2000");
-        String[] especialidades = {"PHP","Java"};
-        professorDTO.setEspecialidades(Arrays.asList(especialidades) );
+        Professor professor = professorRepository.getById(id);
+        ProfessorDTO professorDTO = new ProfessorDTO(professor);
         return professorDTO;
     }
-
+    @GetMapping("/nome/{nome}")
+    public ProfessorDTO localizarProfessorPorNome(@PathVariable(name = "nome")String nome){
+        Professor professor = professorRepository.findFirstByNome(nome);
+        return new ProfessorDTO(professor);
+    }
     @GetMapping
     public List<ProfessorDTO> listarProfessors(){
         List<ProfessorDTO> professorDTOS = new ArrayList<>();
-        ArrayList<String> strings = new ArrayList<>();
-        strings.add("JS");
-        professorDTOS.add(new ProfessorDTO("José", "01/01/2000", strings));
-        professorDTOS.add(new ProfessorDTO("Maria", "01/01/2000", strings));
+        List<Professor> professorList = professorRepository.findAll();
+        for(Professor professor: professorList){
+            ProfessorDTO professorDTO = new ProfessorDTO(professor);
+            professorDTOS.add(professorDTO);
+        }
         return professorDTOS;
     }
 
     @PostMapping
     public void gravarProfessor(@RequestBody ProfessorDTO dto){
-        System.out.println(dto);
-
+        Professor professor = dto.converteParaProfessor(dto);
+        professorRepository.save(professor);
     }
 }
